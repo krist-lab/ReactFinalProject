@@ -79,6 +79,26 @@ const showMessageBox = (text, type) => {
     {message.text}
   </div>
 )}
+import googleIcon from "./assets/googleIcon.svg";
+import facebookIcon from "./assets/facebookIcon.svg";
+import twiterIcon from "./assets/twiterIcon.svg";
+
+const handleSocialLogin = (platform) => {
+  showMessageBox(`Logging in with ${platform}`, 'info');
+};
+
+// JSX
+<div className="flex justify-center space-x-6">
+  <button onClick={() => handleSocialLogin('Google')}>
+    <img src={googleIcon} alt="Google" />
+  </button>
+  <button onClick={() => handleSocialLogin('Facebook')}>
+    <img src={facebookIcon} alt="Facebook" />
+  </button>
+  <button onClick={() => handleSocialLogin('Twitter')}>
+    <img src={twiterIcon} alt="Twitter" />
+  </button>
+</div>
 
 
 export default App;
