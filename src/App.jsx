@@ -12,6 +12,7 @@ const App = () => {
   };
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-white p-4">
@@ -63,6 +64,22 @@ const App = () => {
     </div>
   );
 };
+ const [isMessageVisible, setIsMessageVisible] = useState(false);
+const [message, setMessage] = useState({ text: '', type: '' });
+
+const showMessageBox = (text, type) => {
+  setMessage({ text, type });
+  setIsMessageVisible(true);
+  setTimeout(() => setIsMessageVisible(false), 3000);
+};
+
+// JSX: conditionally render message box at top
+{isMessageVisible && (
+  <div className={`fixed top-4 ...`}>
+    {message.text}
+  </div>
+)}
+
 
 export default App;
 
