@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const LoginPage = ({ switchToRegister }) => {
+const LoginPage = ({ switchToRegister, switchToProducts }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -20,6 +20,7 @@ const LoginPage = ({ switchToRegister }) => {
       setIsLoading(false);
       if (email === "user@example.com" && password === "password123") {
         alert("ავტორიზაცია წარმატებით დასრულდა ✅");
+        switchToProducts(); // წარმატებულ login-ზე გადადის პროდუქტებზე
       } else {
         setError("ელფოსტა ან პაროლი არასწორია");
       }
@@ -64,13 +65,22 @@ const LoginPage = ({ switchToRegister }) => {
           </button>
         </form>
 
-        <div className="text-center mt-6 text-gray-600 text-sm">
-          ჯერ არ გაქვთ ანგარიში?{" "}
+        <div className="text-center mt-6 text-gray-600 text-sm space-y-2">
+          <div>
+            ჯერ არ გაქვთ ანგარიში?{" "}
+            <button
+              onClick={switchToRegister}
+              className="text-purple-700 hover:text-purple-900 font-semibold"
+            >
+              რეგისტრაცია
+            </button>
+          </div>
+
           <button
-            onClick={switchToRegister}
-            className="text-purple-700 hover:text-purple-900 font-semibold"
+            onClick={switchToProducts}
+            className="text-gray-600 hover:underline"
           >
-            რეგისტრაცია
+            გაგრძელება სტუმრის სახით
           </button>
         </div>
       </div>
