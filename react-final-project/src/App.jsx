@@ -1,23 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import LoginPage from "./pages/LoginPage";
+import RegistrationPage from "./pages/RegistrationPage";
+import ProductsPage from "./pages/ProductsPage";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState("login");
+
+  const goToRegister = () => setCurrentPage("register");
+  const goToLogin = () => setCurrentPage("login");
+  const goToProducts = () => setCurrentPage("products");
 
   return (
-    <>
-      <div>
+    <div className="min-h-screen">
+      {currentPage === "login" && (
+        <LoginPage 
+          switchToRegister={goToRegister} 
+          switchToProducts={goToProducts} 
+        />
+      )}
+
+      {currentPage === "register" && (
+        <RegistrationPage 
+          switchToLogin={goToLogin} 
+        />
+      )}
+
+      {currentPage === "products" && <ProductsPage />}
     </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  );
 }
 
+export default App;
 
 
-export default App
+
+
+
+
 
