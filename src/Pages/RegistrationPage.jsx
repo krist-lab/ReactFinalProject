@@ -1,45 +1,124 @@
-const handleSubmit = (e) => {
-  e.preventDefault();
+import React, { useState, useEffect } from "react";
 
-  if (!email || !password || !confirm) {
-    alert("გთხოვთ შეავსოთ ყველა ველი");
-    return;
-  }
+// helper for email validation
+const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    alert("გთხოვთ შეიყვანოთ სწორი ელფოსტა");
-    return;
-  }
+const RegistrationPage = ({ switchToLogin }) => {
+  // form state
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
 
-  if (password !== confirm) {
-    alert("პაროლები არ ემთხვევა");
-    return;
-  }
+  // ui state
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  alert("რეგისტრაცია წარმატებით დასრულდა ✅");
+  // realtime validation for password match
+  useEffect(() => {
+    if (confirm && password !== confirm) {
+      setError("პაროლები არ ემთხვევა");
+    } else {
+      setError("");
+    }
+  }, [password, confirm]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    if (!email.trim() || !password || !confirm) {
+      return setError("გთხოვთ შეავსოთ ყველა ველი");
+    }
+    if (!isValidEmail(email.trim())) {
+      return setError("გთხოვთ შეიყვანოთ სწორი ელფოსტა");
+    }
+    if (password !== confirm) {
+      return setError("პაროლები არ ემთხვევა");
+    }
+
+    setIsLoading(true);
+
+    // simulate API call
+    setTimeout(() => {
+      setIsLoading(false);
+      setSuccess("რეგისტრაცია წარმატებით დასრულდა ✅");
+      setEmail("");
+      setPassword("");
+      setConfirm("");
+    }, 1500);
+  };
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
+      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
+        <h2 className="mb-6 text-center text-2xl font-bold text-gray-800">
+          რეგისტრაცია
+        </h2>
+
+        {error && (
+          <div className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-600">
+            {error}
+          </div>
+        )}
+
+        {!error && success && (
+          <div className="mb-4 rounded-md bg-green-50 p-3 text-sm text-green-600">
+            {success}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <input
+            type="email"
+            placeholder="ელ-ფოსტა"
+            aria-label="ელ-ფოსტა"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+
+          <input
+            type="password"
+            placeholder="პაროლი"
+            aria-label="პაროლი"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+
+          <input
+            type="password"
+            placeholder="გაიმეორეთ პაროლი"
+            aria-label="გაიმეორეთ პაროლი"
+            value={confirm}
+            onChange={(e) => setConfirm(e.target.value)}
+            className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full rounded-xl bg-purple-600 py-2.5 font-medium text-white transition hover:bg-purple-700 disabled:opacity-60"
+          >
+            {isLoading ? "იტვირთება..." : "რეგისტრაცია"}
+          </button>
+        </form>
+
+        <p className="mt-6 text-center text-sm text-gray-600">
+          უკვე გაქვთ ანგარიში?{" "}
+          <button
+            onClick={switchToLogin}
+            className="font-semibold text-purple-700 hover:text-purple-900"
+          >
+            შესვლა
+          </button>
+        </p>
+      </div>
+    </div>
+  );
 };
 
-
-const [error, setError] = useState("");
-const [success, setSuccess] = useState("");
-
-if (!email || !password || !confirm) {
-  setError("გთხოვთ შეავსოთ ყველა ველი");
-  return;
-}
-if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-  setError("გთხოვთ შეიყვანოთ სწორი ელფოსტა");
-  return;
-}
-if (password !== confirm) {
-  setError("პაროლები არ ემთხვევა");
-  return;
-}
-setError("");
-setSuccess("რეგისტრაცია წარმატებით დასრულდა ✅");
-
-{error && <p className="text-red-600">{error}</p>}
-{success && <p className="text-green-600">{success}</p>}
-
-
+export default RegistrationPage;
 
