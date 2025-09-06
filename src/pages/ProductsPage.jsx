@@ -4,7 +4,7 @@ import ProductCard from "../components/ProductCard";
 import CategoryFilter from "../components/CategoryFilter";
 import SearchInput from "../components/SearchInput";
 
-const ProductsPage = () => {
+const ProductsPage = ({ onSelectProduct }) => {
   const [selectedCategory, setSelectedCategory] = useState("ყველა");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -43,7 +43,11 @@ const ProductsPage = () => {
         {filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard
+                key={product.id}
+                product={product}
+                onSelectProduct={onSelectProduct} // აქ ვამატებთ
+              />
             ))}
           </div>
         ) : (
@@ -56,5 +60,6 @@ const ProductsPage = () => {
   );
 };
 
-export default ProductsPage;
+export default ProductsPage
+
 
