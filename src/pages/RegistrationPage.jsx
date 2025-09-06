@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from "react";
 
-// helper for email validation
 const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 const RegistrationPage = ({ switchToLogin }) => {
-  // form state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
 
-  // ui state
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // realtime validation for password match
   useEffect(() => {
     if (confirm && password !== confirm) {
       setError("პაროლები არ ემთხვევა");
@@ -40,7 +36,6 @@ const RegistrationPage = ({ switchToLogin }) => {
 
     setIsLoading(true);
 
-    // simulate API call
     setTimeout(() => {
       setIsLoading(false);
       setSuccess("რეგისტრაცია წარმატებით დასრულდა ✅");
