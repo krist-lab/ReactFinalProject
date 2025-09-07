@@ -30,31 +30,19 @@ const App = () => {
           {currentPage === "cart" && <CartPage onBackToShop={() => goTo("products")} />}
           <CartStatus onNavigateToCart={() => goTo("cart")} />
         </>
+      ) : currentPage === "login" ? (
+        <LoginPage
+          switchToRegister={() => goTo("register")}
+          onLogin={login}
+          onGuestLogin={login}
+        />
       ) : (
-        <>
-          {currentPage === "login" && (
-            <LoginPage
-              switchToRegister={() => goTo("register")}
-              onLogin={login}
-              onGuestLogin={login}
-            />
-          )}
-          {currentPage === "register" && (
-            <RegistrationPage switchToLogin={() => goTo("login")} />
-          )}
-        </>
+        <RegistrationPage switchToLogin={() => goTo("login")} />
       )}
     </CartProvider>
   );
 };
 
 export default App;
-
-
-
-
-
-
-
 
 
