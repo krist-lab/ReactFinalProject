@@ -12,13 +12,12 @@ const App = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isAuth, setIsAuth] = useState(false);
 
-  const login = () => setIsAuth(true);
-  const guestLogin = () => setIsAuth(true);
-
+  const goTo = (page) => setCurrentPage(page);
   const goToDetails = (product) => {
     setSelectedProduct(product);
-    setCurrentPage("details");
+    goTo("details");
   };
+  const login = () => setIsAuth(true);
 
   return (
     <CartProvider>
@@ -26,18 +25,22 @@ const App = () => {
         <>
           {currentPage === "products" && <ProductsPage onSelectProduct={goToDetails} />}
           {currentPage === "details" && selectedProduct && (
-            <ProductDetails product={selectedProduct} onBack={() => setCurrentPage("products")} />
+            <ProductDetails product={selectedProduct} onBack={() => goTo("products")} />
           )}
-          {currentPage === "cart" && <CartPage onBackToShop={() => setCurrentPage("products")} />}
-          <CartStatus onNavigateToCart={() => setCurrentPage("cart")} />
+          {currentPage === "cart" && <CartPage onBackToShop={() => goTo("products")} />}
+          <CartStatus onNavigateToCart={() => goTo("cart")} />
         </>
       ) : (
         <>
           {currentPage === "login" && (
-            <LoginPage switchToRegister={() => setCurrentPage("register")} onLogin={login} onGuestLogin={guestLogin} />
+            <LoginPage
+              switchToRegister={() => goTo("register")}
+              onLogin={login}
+              onGuestLogin={login}
+            />
           )}
           {currentPage === "register" && (
-            <RegistrationPage switchToLogin={() => setCurrentPage("login")} />
+            <RegistrationPage switchToLogin={() => goTo("login")} />
           )}
         </>
       )}
@@ -46,6 +49,7 @@ const App = () => {
 };
 
 export default App;
+
 
 
 
