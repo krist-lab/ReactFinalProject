@@ -2,7 +2,7 @@ import React from "react";
 import { useCart } from "../contexts/CartContext";
 
 const CartPage = ({ onBackToShop }) => {
-  const { cart } = useCart();
+  const { cart, incrementQuantity, decrementQuantity, removeItem } = useCart();
   const totalItems = cart.reduce((t, i) => t + i.quantity, 0);
 
   return (
@@ -37,7 +37,27 @@ const CartPage = ({ onBackToShop }) => {
               <div className="flex-1">
                 <h3 className="text-lg font-semibold text-gray-800">{item.name}</h3>
                 <p className="text-gray-600">${item.price.toFixed(2)}</p>
-                <p className="text-gray-500 text-sm mt-1">Quantity: {item.quantity}</p>
+                <div className="flex items-center gap-2 mt-1">
+                  <button
+                    onClick={() => decrementQuantity(item.id)}
+                    className="px-2 py-1 border rounded-lg"
+                  >
+                    -
+                  </button>
+                  <span>{item.quantity}</span>
+                  <button
+                    onClick={() => incrementQuantity(item.id)}
+                    className="px-2 py-1 border rounded-lg"
+                  >
+                    +
+                  </button>
+                  <button
+                    onClick={() => removeItem(item.id)}
+                    className="ml-3 text-red-600 hover:underline"
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
             </li>
           ))}

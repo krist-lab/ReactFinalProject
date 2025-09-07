@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const LoginPage = ({ switchToRegister, switchToProducts }) => {
+const LoginPage = ({ switchToRegister, onLogin, onGuestLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -14,13 +14,11 @@ const LoginPage = ({ switchToRegister, switchToProducts }) => {
     }
     setIsLoading(true);
     setError("");
-
-    // Fake login simulation
     setTimeout(() => {
       setIsLoading(false);
       if (email === "user@example.com" && password === "password123") {
         alert("ავტორიზაცია წარმატებით დასრულდა ✅");
-        switchToProducts(); // წარმატებულ login-ზე გადადის პროდუქტებზე
+        onLogin();
       } else {
         setError("ელფოსტა ან პაროლი არასწორია");
       }
@@ -33,13 +31,11 @@ const LoginPage = ({ switchToRegister, switchToProducts }) => {
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           შესვლა
         </h2>
-
         {error && (
           <p className="text-red-600 bg-red-50 p-3 rounded-md text-sm mb-4">
             {error}
           </p>
         )}
-
         <form onSubmit={handleLogin} className="space-y-5">
           <input
             type="email"
@@ -55,7 +51,6 @@ const LoginPage = ({ switchToRegister, switchToProducts }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-
           <button
             type="submit"
             disabled={isLoading}
@@ -64,7 +59,6 @@ const LoginPage = ({ switchToRegister, switchToProducts }) => {
             {isLoading ? "იტვირთება..." : "Login"}
           </button>
         </form>
-
         <div className="text-center mt-6 text-gray-600 text-sm space-y-2">
           <div>
             ჯერ არ გაქვთ ანგარიში?{" "}
@@ -75,9 +69,8 @@ const LoginPage = ({ switchToRegister, switchToProducts }) => {
               რეგისტრაცია
             </button>
           </div>
-
           <button
-            onClick={switchToProducts}
+            onClick={onGuestLogin}
             className="text-gray-600 hover:underline"
           >
             გაგრძელება სტუმრის სახით
@@ -89,4 +82,5 @@ const LoginPage = ({ switchToRegister, switchToProducts }) => {
 };
 
 export default LoginPage;
+
 

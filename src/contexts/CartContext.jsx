@@ -16,8 +16,20 @@ export const CartProvider = ({ children }) => {
     });
   };
 
+  const incrementQuantity = (id) => {
+    setCart(prev => prev.map(p => p.id === id ? { ...p, quantity: p.quantity + 1 } : p));
+  };
+
+  const decrementQuantity = (id) => {
+    setCart(prev => prev.map(p => p.id === id && p.quantity > 1 ? { ...p, quantity: p.quantity - 1 } : p));
+  };
+
+  const removeItem = (id) => {
+    setCart(prev => prev.filter(p => p.id !== id));
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider value={{ cart, addToCart, incrementQuantity, decrementQuantity, removeItem }}>
       {children}
     </CartContext.Provider>
   );
