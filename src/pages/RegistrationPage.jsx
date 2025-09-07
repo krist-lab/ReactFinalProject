@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-const RegistrationPage = ({ switchToLogin }) => {
+const RegistrationPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -10,6 +11,8 @@ const RegistrationPage = ({ switchToLogin }) => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (confirm && password !== confirm) {
@@ -38,10 +41,12 @@ const RegistrationPage = ({ switchToLogin }) => {
 
     setTimeout(() => {
       setIsLoading(false);
-      setSuccess("რეგისტრაცია წარმატებით დასრულდა ✅");
+      setSuccess("რეგისტრაცია წარმატებით დასრულდა ");
       setEmail("");
       setPassword("");
       setConfirm("");
+
+      setTimeout(() => navigate("/login"), 1200);
     }, 1500);
   };
 
@@ -104,7 +109,7 @@ const RegistrationPage = ({ switchToLogin }) => {
         <p className="mt-6 text-center text-sm text-gray-600">
           უკვე გაქვთ ანგარიში?{" "}
           <button
-            onClick={switchToLogin}
+            onClick={() => navigate("/login")}
             className="font-semibold text-purple-700 hover:text-purple-900"
           >
             შესვლა
@@ -116,4 +121,5 @@ const RegistrationPage = ({ switchToLogin }) => {
 };
 
 export default RegistrationPage;
+
 

@@ -1,8 +1,10 @@
 import React from "react";
 import { useCart } from "../contexts/CartContext";
+import { useNavigate } from "react-router-dom";
 
-const CartStatus = ({ onNavigateToCart }) => {
+const CartStatus = () => {
   const { cart } = useCart();
+  const navigate = useNavigate();
   const total = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
@@ -10,7 +12,7 @@ const CartStatus = ({ onNavigateToCart }) => {
       <h3 className="font-bold text-gray-800">Your Cart</h3>
       <p className="text-gray-600 mb-2">Total Items: {total}</p>
       <button
-        onClick={onNavigateToCart}
+        onClick={() => navigate("/cart")}
         className="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition"
       >
         View Cart
@@ -20,4 +22,5 @@ const CartStatus = ({ onNavigateToCart }) => {
 };
 
 export default CartStatus;
+
 

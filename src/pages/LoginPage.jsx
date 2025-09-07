@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const LoginPage = ({ switchToRegister, onLogin, onGuestLogin }) => {
+const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -17,8 +20,8 @@ const LoginPage = ({ switchToRegister, onLogin, onGuestLogin }) => {
     setTimeout(() => {
       setIsLoading(false);
       if (email === "user@example.com" && password === "password123") {
-        alert("ავტორიზაცია წარმატებით დასრულდა ✅");
-        onLogin();
+        alert("ავტორიზაცია წარმატებით დასრულდა ");
+        navigate("/products"); 
       } else {
         setError("ელფოსტა ან პაროლი არასწორია");
       }
@@ -61,19 +64,19 @@ const LoginPage = ({ switchToRegister, onLogin, onGuestLogin }) => {
         </form>
         <div className="text-center mt-6 text-gray-600 text-sm space-y-2">
           <div>
-            ჯერ არ გაქვთ ანგარიში?{" "}
+            ჯერ არ გაქვს ანგარიში?{" "}
             <button
-              onClick={switchToRegister}
+              onClick={() => navigate("/register")}
               className="text-purple-700 hover:text-purple-900 font-semibold"
             >
               რეგისტრაცია
             </button>
           </div>
           <button
-            onClick={onGuestLogin}
+            onClick={() => navigate("/products")}
             className="text-gray-600 hover:underline"
           >
-            გაგრძელება სტუმრის სახით
+            შესვლა როგორც სტუმარი
           </button>
         </div>
       </div>
@@ -82,5 +85,6 @@ const LoginPage = ({ switchToRegister, onLogin, onGuestLogin }) => {
 };
 
 export default LoginPage;
+
 
 

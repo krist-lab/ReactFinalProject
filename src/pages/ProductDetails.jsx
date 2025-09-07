@@ -1,9 +1,22 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { products } from "../data/products";
 import { useCart } from "../contexts/CartContext";
 
-const ProductDetails = ({ product }) => {
+const ProductDetails = () => {
+  const { id } = useParams(); 
   const { addToCart } = useCart();
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
+
+  const product = products.find((p) => p.id === parseInt(id));
+
+  if (!product) {
+    return (
+      <div className="text-center text-xl text-gray-600 mt-10">
+        პროდუქტი ვერ მოიძებნა.
+      </div>
+    );
+  }
 
   const handleAdd = () => {
     addToCart(product);
@@ -22,10 +35,13 @@ const ProductDetails = ({ product }) => {
       >
         Add to Cart
       </button>
-      {message && <div className="mt-4 text-center bg-green-100 text-green-700 py-2 px-4 rounded-lg">{message}</div>}
+      {message && (
+        <div className="mt-4 text-center bg-green-100 text-green-700 py-2 px-4 rounded-lg">
+          {message}
+        </div>
+      )}
     </div>
   );
 };
 
 export default ProductDetails;
-

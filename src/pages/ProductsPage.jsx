@@ -1,12 +1,14 @@
 import React, { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { products } from "../data/products";
 import ProductCard from "../components/ProductCard";
 import CategoryFilter from "../components/CategoryFilter";
 import SearchInput from "../components/SearchInput";
 
-const ProductsPage = ({ onSelectProduct }) => {
+const ProductsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("ყველა");
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
   const categories = ["ყველა", ...new Set(products.map((p) => p.category))];
 
@@ -20,6 +22,10 @@ const ProductsPage = ({ onSelectProduct }) => {
       return matchCategory && matchSearch;
     });
   }, [selectedCategory, searchQuery]);
+
+  const handleSelectProduct = (product) => {
+    navigate(`/products/${product.id}`);
+  };
 
   return (
     <div className="p-6 md:p-10 bg-gray-100 min-h-screen">
@@ -46,7 +52,7 @@ const ProductsPage = ({ onSelectProduct }) => {
               <ProductCard
                 key={product.id}
                 product={product}
-                onSelectProduct={onSelectProduct} // აქ ვამატებთ
+                onSelectProduct={handleSelectProduct}
               />
             ))}
           </div>
@@ -60,6 +66,4 @@ const ProductsPage = ({ onSelectProduct }) => {
   );
 };
 
-export default ProductsPage
-
-
+export default ProductsPage;
