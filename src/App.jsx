@@ -5,6 +5,7 @@ import ProductsPage from "./pages/ProductsPage";
 import ProductDetails from "./pages/ProductDetails";
 import CartPage from "./pages/CartPage";
 import CartStatus from "./components/CartStatus";
+import NotFoundPage from "./pages/NotFoundPage";
 import { CartProvider } from "./contexts/CartContext";
 
 const App = () => {
@@ -24,25 +25,32 @@ const App = () => {
       {isAuth ? (
         <>
           {currentPage === "products" && <ProductsPage onSelectProduct={goToDetails} />}
-          {currentPage === "details" && selectedProduct && (
+          {currentPage === "details" && selectedProduct ? (
             <ProductDetails product={selectedProduct} onBack={() => goTo("products")} />
-          )}
+          ) : currentPage === "details" ? (
+            <NotFoundPage />
+          ) : null}
           {currentPage === "cart" && <CartPage onBackToShop={() => goTo("products")} />}
+          {currentPage !== "products" &&
+           currentPage !== "details" &&
+           currentPage !== "cart" && <NotFoundPage />}
           <CartStatus onNavigateToCart={() => goTo("cart")} />
         </>
-      ) : currentPage === "login" ? (
-        <LoginPage
-          switchToRegister={() => goTo("register")}
-          onLogin={login}
-          onGuestLogin={login}
-        />
       ) : (
-        <RegistrationPage switchToLogin={() => goTo("login")} />
+        <>
+          {currentPage === "login" && (
+            <LoginPage
+              switchToRegister={() => goTo("register")}
+              onLogin={login}
+              onGuestLogin={login}
+            />
+          )}
+          {currentPage === "register" && <RegistrationPage switchToLogin={() => goTo("login")} />}
+          {currentPage !== "login" && currentPage !== "register" && <NotFoundPage />}
+        </>
       )}
     </CartProvider>
   );
 };
 
 export default App;
-
-
