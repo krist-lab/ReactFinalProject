@@ -1,12 +1,36 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ეს არის React-ზე შექმნილი მარტივი E-commerce აპლიკაცია, სადაც მომხმარებელს შეუძლია:
+პროდუქტების დათვალიერება, ფილტრაცია, კატეგორიის მიხედვით პროდუქტის დეტალების ნახვა, კალათაში დამატება და რაოდენობის მართვა, ავტორიზაცია (Login / Register).
 
-Currently, two official plugins are available:
+Features
+Authentication Pages – Login და Register.
+Product Catalog – პროდუქტების ჩამონათვალი ბარათებით.
+Category Filter – პროდუქტების ფილტრაცია კატეგორიის მიხედვით.
+Product Details – კონკრეტული პროდუქტის სრული ინფორმაცია.
+Shopping Cart – კალათაში დამატება, რაოდენობის გაზრდა/შემცირება, წაშლა.
+Navigation – მარტივი Navbar ბმულებით.
+Error Handling – 404 გვერდი არასწორი URL-ისთვის.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Components
+Navbar.jsx → შეიცავს ლინკებს:
+Home / Products,Cart,Login / Register, ProductCard.jsx - თითო პროდუქტის ბარათი: სურათი, სახელი, კატეგორია, ფასი.
+ღილაკის დაჭერისას გადასცემს onSelectProduct(product) → გადაყვანა დეტალების გვერდზე.
+CartItem.jsx → კალათის ერთი ელემენტი: პროდუქტის სახელი, ფასი, რაოდენობა. Increment/Decrement ღილაკები.
+Remove ღილაკი (წაშლის კონკრეტულ პროდუქტს).
 
-## Expanding the ESLint configuration
+Pages (with US mapping) LoginPage.jsx → (US-01)მომხმარებელი შედის ანგარიშზე. ფორმა: email / password + ვალიდაცია.RegisterPage.jsx 
+ (US-02) მომხმარებელი რეგისტრირდება. ფორმა: email / password / confirm password.
+ProductsPage.jsx → (US-08, US-09) აჩვენებს ყველა პროდუქტს (ProductCard). ზედა ნაწილში არის CategoryFilter. ფილტრავს პროდუქტებს კატეგორიის მიხედვით.
+  ProductDetailPage.jsx → (US-11)
+აჩვენებს კონკრეტული პროდუქტის დეტალებს: სურათი, ფასი, აღწერა. ღილაკი → "Add to Cart".
+  CartPage.jsx → (US-12, US-13, US-14, US-15)
+აჩვენებს კალათაში არსებულ პროდუქტებს (CartItem). ფუნქციები: რაოდენობის გაზრდა / შემცირება.
+პროდუქტის წაშლა. საერთო თანხის გამოთვლა.
+NotFoundPage.jsx → (US-21)
+404 გვერდი, თუ მომხმარებელი არასწორ ბმულზე გადავა.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+React (Vite setup)
+React Router DOM (გვერდებს შორის ნავიგაცია)
+Context API (Cart state management)
+Tailwind CSS (სტილიზაცია)
