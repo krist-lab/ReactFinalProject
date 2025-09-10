@@ -7,11 +7,9 @@ const RegistrationPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
-
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,7 +39,8 @@ const RegistrationPage = () => {
 
     setTimeout(() => {
       setIsLoading(false);
-      setSuccess("რეგისტრაცია წარმატებით დასრულდა ");
+      localStorage.setItem("user", JSON.stringify({ email, password }));
+      setSuccess("რეგისტრაცია წარმატებით დასრულდა");
       setEmail("");
       setPassword("");
       setConfirm("");
@@ -56,47 +55,30 @@ const RegistrationPage = () => {
         <h2 className="mb-6 text-center text-2xl font-bold text-gray-800">
           რეგისტრაცია
         </h2>
-
-        {error && (
-          <div className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-600">
-            {error}
-          </div>
-        )}
-
-        {!error && success && (
-          <div className="mb-4 rounded-md bg-green-50 p-3 text-sm text-green-600">
-            {success}
-          </div>
-        )}
-
+        {error && <div className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-600">{error}</div>}
+        {!error && success && <div className="mb-4 rounded-md bg-green-50 p-3 text-sm text-green-600">{success}</div>}
         <form onSubmit={handleSubmit} className="space-y-5">
           <input
             type="email"
             placeholder="ელ-ფოსტა"
-            aria-label="ელ-ფოსტა"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
-
           <input
             type="password"
             placeholder="პაროლი"
-            aria-label="პაროლი"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
-
           <input
             type="password"
             placeholder="გაიმეორეთ პაროლი"
-            aria-label="გაიმეორეთ პაროლი"
             value={confirm}
             onChange={(e) => setConfirm(e.target.value)}
             className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
-
           <button
             type="submit"
             disabled={isLoading}
@@ -105,13 +87,9 @@ const RegistrationPage = () => {
             {isLoading ? "იტვირთება..." : "რეგისტრაცია"}
           </button>
         </form>
-
         <p className="mt-6 text-center text-sm text-gray-600">
           უკვე გაქვთ ანგარიში?{" "}
-          <button
-            onClick={() => navigate("/login")}
-            className="font-semibold text-purple-700 hover:text-purple-900"
-          >
+          <button onClick={() => navigate("/login")} className="font-semibold text-purple-700 hover:text-purple-900">
             შესვლა
           </button>
         </p>
@@ -121,5 +99,4 @@ const RegistrationPage = () => {
 };
 
 export default RegistrationPage;
-
 

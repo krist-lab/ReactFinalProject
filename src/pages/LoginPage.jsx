@@ -5,86 +5,64 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email || !password) {
-      setError("გთხოვთ შეავსოთ ყველა ველი");
-      return;
-    }
-    setIsLoading(true);
     setError("");
-    setTimeout(() => {
-      setIsLoading(false);
-      if (email === "user@example.com" && password === "password123") {
-        alert("ავტორიზაცია წარმატებით დასრულდა ");
-        navigate("/products"); 
-      } else {
-        setError("ელფოსტა ან პაროლი არასწორია");
-      }
-    }, 1000);
+
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+
+    if (!storedUser) {
+      return setError("მომხმარებელი არ მოიძებნა");
+    }
+
+    if (storedUser.email === email && storedUser.password === password) {
+      localStorage.setItem("isLoggedIn", "true");
+      navigate("/products");
+    } else {
+      setError("არასწორი ელფოსტა ან პაროლი");
+    }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 px-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
+      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
+        <h2 className="mb-6 text-center text-2xl font-bold text-gray-800">
           შესვლა
         </h2>
-        {error && (
-          <p className="text-red-600 bg-red-50 p-3 rounded-md text-sm mb-4">
-            {error}
-          </p>
-        )}
-        <form onSubmit={handleLogin} className="space-y-5">
+        {error && <div className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-600">{error}</div>}
+        <form onSubmit={handleSubmit} className="space-y-5">
           <input
             type="email"
             placeholder="ელ-ფოსტა"
-            className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
           <input
             type="password"
             placeholder="პაროლი"
-            className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="w-full rounded-xl border border-gray-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
           <button
             type="submit"
-            disabled={isLoading}
-            className="w-full bg-purple-600 text-white py-2.5 rounded-xl font-medium hover:bg-purple-700 disabled:opacity-60 transition"
+            className="w-full rounded-xl bg-purple-600 py-2.5 font-medium text-white transition hover:bg-purple-700"
           >
-            {isLoading ? "იტვირთება..." : "Login"}
+            შესვლა
           </button>
         </form>
-        <div className="text-center mt-6 text-gray-600 text-sm space-y-2">
-          <div>
-            ჯერ არ გაქვს ანგარიში?{" "}
-            <button
-              onClick={() => navigate("/register")}
-              className="text-purple-700 hover:text-purple-900 font-semibold"
-            >
-              რეგისტრაცია
-            </button>
-          </div>
-          <button
-            onClick={() => navigate("/products")}
-            className="text-gray-600 hover:underline"
-          >
-            შესვლა როგორც სტუმარი
+        <p className="mt-6 text-center text-sm text-gray-600">
+          ჯერ არ გაქვთ ანგარიში?{" "}
+          <button onClick={() => navigate("/register")} className="font-semibold text-purple-700 hover:text-purple-900">
+            რეგისტრაცია
           </button>
-        </div>
+        </p>
       </div>
     </div>
   );
 };
 
 export default LoginPage;
-
-
-
