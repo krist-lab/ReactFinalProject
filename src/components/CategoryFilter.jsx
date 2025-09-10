@@ -9,8 +9,8 @@ const CategoryFilter = ({ categories, selectedCategory, onSelectCategory }) => {
           onClick={() => onSelectCategory(category)}
           className={`px-6 py-3 rounded-full font-medium transition-colors duration-200 shadow-md ${
             selectedCategory === category
-              ? "bg-blue-600 text-white"
-              : "bg-gray-200 text-gray-900 hover:bg-blue-500 hover:text-white"
+              ? "bg-red-500 text-white"
+              : "bg-gray-200 text-gray-900 hover:bg-red-500 hover:text-white"
           }`}
         >
           {category}

@@ -4,6 +4,7 @@ import { products } from "../data/products";
 import ProductCard from "../components/ProductCard";
 import CategoryFilter from "../components/CategoryFilter";
 import SearchInput from "../components/SearchInput";
+import Header from "../components/Header";
 
 const ProductsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("ყველა");
@@ -30,9 +31,7 @@ const ProductsPage = () => {
   return (
     <div className="p-6 md:p-10 bg-gray-100 min-h-screen">
       <main className="container mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 text-center mb-8">
-          ჩვენი პროდუქტები
-        </h1>
+        <Header showTitle={true} showCartIcon={true} />
 
         <div className="mb-6 flex flex-wrap justify-center items-center gap-2">
           <CategoryFilter
@@ -67,3 +66,4 @@ const ProductsPage = () => {
 };
 
 export default ProductsPage;
+
